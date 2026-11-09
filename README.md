@@ -28,10 +28,10 @@
 
 ## 4. 실행 방법
 
-### 1) 저장소 복제
+### 1) git 저장소 복제
 
 ```bash
-% git clone https://github.com/1cando/codyssey2.git
+% git clone https://github.com/[깃주소].git
 Cloning into 'codyssey2'...
 remote: Enumerating objects: 3, done.
 remote: Counting objects: 100% (3/3), done.
@@ -40,16 +40,27 @@ Receiving objects: 100% (3/3), done.
 
 ```
 
-### 2) 프로젝트 폴더 이동
+### 2) git 파일 생성
 
 ```bash
-cd codyssey2
+% touch main.py quiz.py quiz_game.py state.json .gitignore README.md
 ```
 
-### 3) 프로그램 실행
+### 3) git 브랜치 생성 및 이동
 
 ```bash
-python3 main.py
+% git checkout -b feature/quiz-game
+Switched to a new branch 'feature/quiz-game'
+
+% git branch
+* feature/quiz-game
+  main
+```
+
+### 4) git 명령어 사용
+
+```bash
+
 ```
 
 ## 5. 주요 기능
@@ -99,30 +110,138 @@ code-quiz/
 | `.gitignore` | Git 추적 제외 파일 설정 |
 | `docs/screenshots/` | 프로그램 실행 화면 캡처 저장 |
 
-## 7. 클래스 구성
 
-### Quiz 클래스
+## 7. 클래스 및 프로그램 구조
 
-퀴즈 한 문제의 정보를 관리합니다.
+본 프로젝트는 객체지향 프로그래밍(OOP) 개념을 적용하여
+Quiz 클래스와 QuizGame 클래스를 중심으로 구성했습니다.
 
-- 문제 내용
-- 선택지
-- 정답
-- 카테고리
-- 해설
+각 클래스가 담당하는 역할을 분리하여 코드의 가독성과
+유지보수성을 높이고, 기능별로 코드를 관리할 수 있도록 설계했습니다.
 
-문제 출력과 정답 확인 등의 기능을 담당합니다.
+### 7-1. Quiz 클래스 (`quiz.py`)
 
-### QuizGame 클래스
+Quiz 클래스는 퀴즈 한 문제를 표현하는 클래스입니다.
 
-퀴즈 게임 전체를 관리합니다.
+하나의 문제에 필요한 데이터와 해당 데이터를 처리하는 메서드를
+하나의 클래스로 묶어 관리합니다.
 
-- 메뉴 출력 및 선택
-- 퀴즈 진행
-- 신규 퀴즈 등록
-- 퀴즈 목록 출력
-- 점수 계산 및 최고 점수 관리
-- JSON 파일 저장 및 불러오기
+**주요 속성(Attribute)**
+
+| 속성 | 자료형 | 설명 |
+|---|---|---|
+| question | str | 퀴즈 문제 내용 |
+| choices | list | 4개의 객관식 선택지 |
+| answer | int | 정답 번호 (1~4) |
+| category | str | 문제의 학습 카테고리 |
+| explanation | str | 정답 및 오답에 대한 해설 |
+
+**주요 메서드(Method)**
+
+| 메서드 | 기능 |
+|---|---|
+| `__init__()` | 퀴즈 객체 생성 및 속성 초기화 |
+| `show_question()` | 문제와 선택지 출력 |
+| `check_answer()` | 사용자 답변과 정답 비교 |
+| `to_dict()` | Quiz 객체를 딕셔너리로 변환 |
+| `from_dict()` | 딕셔너리 데이터를 Quiz 객체로 변환 |
+
+`__init__()`을 통해 문제마다 독립적인 Quiz 객체를 생성합니다.
+
+`check_answer()`는 정답 여부를 Boolean 값(True/False)으로 반환하며,
+`to_dict()`와 `from_dict()`는 JSON 파일에 데이터를 저장하고
+불러오는 과정에서 사용합니다.
+
+### 7-2. QuizGame 클래스 (`quiz_game.py`)
+
+QuizGame 클래스는 퀴즈 게임의 전체적인 흐름과 데이터를 관리합니다.
+
+여러 개의 Quiz 객체를 리스트 형태로 보관하고,
+문제 출제부터 점수 계산, 신규 문제 등록, 데이터 저장까지 담당합니다.
+
+**주요 속성(Attribute)**
+
+| 속성 | 자료형 | 설명 |
+|---|---|---|
+| quizzes | list | Quiz 객체들을 저장하는 리스트 |
+| best_score | int | 지금까지 기록한 최고 점수 |
+| data_file | Path | JSON 데이터 파일의 경로 |
+
+**주요 메서드(Method)**
+
+| 메서드 | 기능 |
+|---|---|
+| `__init__()` | 게임 데이터 초기화 및 저장 데이터 불러오기 |
+| `create_default_quizzes()` | 기본 퀴즈 데이터 생성 |
+| `load_data()` | JSON 파일에서 퀴즈와 점수 불러오기 |
+| `save_data()` | 퀴즈와 최고 점수를 JSON 파일에 저장 |
+| `get_input()` | 사용자 입력값의 앞뒤 공백 제거 |
+| `get_number()` | 숫자 입력 및 유효 범위 검증 |
+| `show_menu()` | 메인 메뉴 출력 |
+| `play_quiz()` | 퀴즈 출제, 정답 확인 및 점수 계산 |
+| `add_quiz()` | 새로운 퀴즈 등록 |
+| `show_quizzes()` | 등록된 퀴즈 목록 출력 |
+| `show_score()` | 최고 점수 출력 |
+
+QuizGame은 Quiz 클래스로 생성한 객체들을 관리합니다.
+
+예를 들어 퀴즈를 추가하면 새로운 Quiz 객체를 생성하고,
+이를 quizzes 리스트에 추가합니다.
+
+퀴즈 진행 시에는 리스트에 저장된 Quiz 객체의
+show_question()과 check_answer() 메서드를 호출하여
+문제 출력과 정답 확인을 수행합니다.
+
+### 7-3. main.py
+
+main.py는 프로그램의 실행 진입점(Entry Point)입니다.
+
+QuizGame 객체를 생성하고 메뉴를 반복해서 출력하며,
+사용자가 선택한 메뉴에 따라 해당 기능을 호출합니다.
+
+게임의 세부 기능은 QuizGame 클래스에 위임하여
+main.py가 프로그램의 전체 실행 흐름에 집중하도록 구성했습니다.
+
+주요 구성:
+- `main()` 함수: 프로그램 실행 및 메뉴 반복 처리
+- `QuizGame()` 객체 생성
+- 조건문(if/elif)을 이용한 메뉴 분기
+- 예외 처리(try/except/finally)를 통한 종료 및 데이터 저장
+
+### 7-4. 객체지향 프로그래밍 적용
+
+본 프로젝트에서는 다음과 같은 객체지향 프로그래밍 개념을 적용했습니다.
+
+**1. 클래스와 객체**
+- Quiz와 QuizGame 클래스를 정의했습니다.
+- 클래스를 이용해 각각의 퀴즈 객체와 게임 객체를 생성합니다.
+
+**2. 캡슐화**
+- 퀴즈 데이터와 관련 기능을 Quiz 클래스 안에 모았습니다.
+- 게임 진행과 데이터 관리 기능을 QuizGame 클래스 안에 모았습니다.
+- 관련 데이터와 기능을 하나의 단위로 관리하도록 구성했습니다.
+
+**3. 객체 간 협력**
+- QuizGame 객체가 여러 Quiz 객체를 관리합니다.
+- QuizGame은 Quiz 객체의 메서드를 호출하여 문제 출력과 정답 확인을 수행합니다.
+
+**4. 책임 분리**
+- Quiz는 개별 문제 관리에 집중합니다.
+- QuizGame은 게임 전체 관리에 집중합니다.
+- main.py는 프로그램 실행 흐름을 담당합니다.
+
+### 7-5. 프로그램 실행 흐름
+
+1. main.py 실행
+2. QuizGame 객체 생성
+3. state.json 파일 확인 및 데이터 불러오기
+4. 메인 메뉴 출력
+5. 사용자 메뉴 선택
+6. 선택한 기능 실행
+7. 퀴즈 진행 및 점수 계산
+8. 데이터 변경 시 JSON 파일에 저장
+9. 종료 시 데이터 저장 후 프로그램 종료
+
 
 ## 8. 데이터 저장 방식
 
