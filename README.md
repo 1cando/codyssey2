@@ -112,7 +112,17 @@ Receiving objects: 100% (3/3), done.
 ```bash
 # GitHub 변경 사항 가져와 통합
 % git pull
-
+remote: Enumerating objects: 7, done.
+remote: Counting objects: 100% (7/7), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 4 (delta 1), reused 4 (delta 1), pack-reused 0 (from 0)
+Unpacking objects: 100% (4/4), 1.59 KiB | 543.00 KiB/s, done.
+From https://github.com/1cando/codyssey2
+   f99370a..00f9646  main       -> origin/main
+Updating f99370a..00f9646
+Fast-forward
+ .gitignore |  8 ++++++++
+ README.md  | 95 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-------------
 ```
 
 ### 5) git 기타 명령어
