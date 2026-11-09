@@ -28,27 +28,35 @@
 
 ## 4. 실행 방법
 
-### 1) git 저장소 복제
+### 1) git 저장소 생성
 
 ```bash
-% git clone https://github.com/[깃주소].git
-Cloning into 'codyssey2'...
-remote: Enumerating objects: 3, done.
-remote: Counting objects: 100% (3/3), done.
-remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
-Receiving objects: 100% (3/3), done.
+# 깃 저장소 초기화
+% git init
 
-```
+# 로컬 Git 저장소와 GitHub 원격 저장소를 연결
+% git remote add origin https://github.com/[깃주소].git
 
-### 2) git 파일 생성
-
-```bash
+# 깃 파일 생성
 % touch main.py quiz.py quiz_game.py state.json .gitignore README.md
+
+# 변경 파일 스테이징
+% git add .
+
+# 변경 사항 기록
+% git commit -m "Initial commit"
+
+# 현재 브랜치 이름을 main으로 변경
+% git branch -M main
+
+# 이후 push/pull의 기본 원격 브랜치 지정하여 GitHub에 업로드
+% git push -u origin main
 ```
 
-### 3) git 브랜치 생성 및 이동
+### 2) git 브랜치 생성 및 이동
 
 ```bash
+# 브랜치 전환 및 생성
 % git checkout -b feature/quiz-game
 Switched to a new branch 'feature/quiz-game'
 
@@ -57,10 +65,71 @@ Switched to a new branch 'feature/quiz-game'
   main
 ```
 
-### 4) git 명령어 사용
+### 3) git 병합
 
 ```bash
+% git checkout main
+M       .gitignore
+Switched to branch 'main'
+Your branch is up to date with 'origin/main'.
 
+% git merge feature/quiz-game 
+Updating e9486b0..f99370a
+Fast-forward
+ README.md    | 165 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++---------
+ main.py      |  38 +++++++++++++++
+ quiz.py      |  46 ++++++++++++++++++
+ quiz_game.py | 284 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 510 insertions(+), 23 deletions(-)
+
+ % git push origin main
+Enumerating objects: 17, done.
+Counting objects: 100% (15/15), done.
+Delta compression using up to 15 threads
+Compressing objects: 100% (12/12), done.
+Writing objects: 100% (12/12), 8.82 KiB | 8.82 MiB/s, done.
+Total 12 (delta 3), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (3/3), done.
+To https://github.com/[깃주소].git
+   e9486b0..f99370a  main -> main
+```
+
+### 1) git 저장소 복제
+
+```bash
+# 원격 저장소 복제
+# GitHub에 있는 codyssey2 저장소를 codyssey2-copy라는 새 폴더에 복제
+% git clone https://github.com/[깃주소].git codyssey2-copy
+Cloning into 'codyssey2'...
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+Receiving objects: 100% (3/3), done.
+```
+
+### 5) git 변경사항 가져오기
+
+```bash
+# GitHub 변경 사항 가져와 통합
+% git pull
+
+```
+
+### 5) git 기타 명령어
+
+```bash
+# 파일 변경상태 확인 
+% git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   .gitignore
+        modified:   README.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
 ## 5. 주요 기능
