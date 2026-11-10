@@ -177,6 +177,7 @@ class QuizGame:
         except OSError as error:
             print(f"데이터 저장에 실패했습니다: {error}")
 
+    # input() => 입력값 받음, input(mes) => mes는 입력받기 전 출력 문구
     def get_input(self, message):
         """사용자 입력의 앞뒤 공백을 제거한다.(중간 공백은 제거 안됨)"""
         return input(message).strip()
@@ -231,6 +232,7 @@ class QuizGame:
 
         # 총 문제 개수 출력
         # f"..." 괄호 안의 내용을 화면에 출력 (f는 f-string이라는 기능)
+        # \n은 줄바꿈
         print(f"\n총 {len(self.quizzes)}문제를 시작합니다!") 
 
         for index, quiz in enumerate(self.quizzes, start=1):
