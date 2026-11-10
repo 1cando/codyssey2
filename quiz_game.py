@@ -6,10 +6,18 @@ from pathlib import Path
 
 from quiz import Quiz
 
-
+# game = QuizGame() 객체를 생성할 때 QuizGame 코드 실행
 class QuizGame:
     """퀴즈 게임 전체를 관리하는 클래스"""
-
+    # __init__ 변수 초기화
+    # """
+    # Path() 파일이나 폴더 경로를 다루는 객체를 만듦
+    # __file__ 현재 실행 중인 Python 파일의 경로
+    # .resolve() 경로를 절대 경로로 변환
+    # .parent 현재 파일이 들어 있는 폴더
+    # / "state.json" 해당 폴더 안의 state.json 경로를 만듦
+    # self.data_file = /Users/사용자/codyssey2/state.json
+    # """
     def __init__(self):
         self.quizzes = []
         self.best_score = 0
@@ -59,53 +67,62 @@ class QuizGame:
                 ["35", "15", "8", "3"],
                 3, "함수",
                 "add 함수는 두 숫자의 합인 8을 반환합니다."
-            ),
-            Quiz(
-                "Python 클래스에서 __init__ 메서드의 역할은?",
-                ["반복문 실행", "객체 초기화", "파일 삭제", "정렬"],
-                2, "클래스",
-                "__init__은 객체가 생성될 때 초기화 작업을 수행합니다."
-            ),
-            Quiz(
-                "클래스 메서드 안에서 self가 가리키는 것은?",
-                ["부모 클래스", "현재 인스턴스", "모듈", "함수의 반환값"],
-                2, "클래스",
-                "self는 메서드를 호출한 현재 인스턴스를 가리킵니다."
-            ),
-            Quiz(
-                "객체(Object)에 대한 설명으로 올바른 것은?",
-                ["클래스로부터 생성된 실제 대상",
-                 "반드시 숫자만 저장하는 변수",
-                 "반복문을 의미하는 문법",
-                 "파일 확장자"],
-                1, "객체지향",
-                "객체는 클래스라는 설계도를 바탕으로 생성됩니다."
-            ),
-            Quiz(
-                "json.dump()의 역할은?",
-                ["JSON 파일 읽기", "JSON 데이터 쓰기",
-                 "파일 삭제", "화면 출력"],
-                2, "파일 입출력",
-                "json.dump()는 Python 데이터를 JSON 형식으로 파일에 씁니다."
-            ),
-            Quiz(
-                "git add 명령어의 역할은?",
-                ["원격 저장소 삭제", "커밋 기록 삭제",
-                 "변경 파일을 스테이징 영역에 추가",
-                 "브랜치 병합"],
-                3, "Git",
-                "git add는 커밋할 변경사항을 스테이징 영역에 올립니다."
-            ),
-            Quiz(
-                "git clone과 git pull의 차이로 올바른 것은?",
-                ["둘 다 파일을 삭제한다",
-                 "clone은 저장소를 복제하고 pull은 기존 저장소에 변경사항을 가져온다",
-                 "pull은 새 저장소를 만든다",
-                 "clone은 커밋만 실행한다"],
-                2, "Git",
-                "clone은 원격 저장소를 처음 복제하고, pull은 기존 저장소를 업데이트합니다."
             )
+            # ,
+            # Quiz(
+            #     "Python 클래스에서 __init__ 메서드의 역할은?",
+            #     ["반복문 실행", "객체 초기화", "파일 삭제", "정렬"],
+            #     2, "클래스",
+            #     "__init__은 객체가 생성될 때 초기화 작업을 수행합니다."
+            # ),
+            # Quiz(
+            #     "클래스 메서드 안에서 self가 가리키는 것은?",
+            #     ["부모 클래스", "현재 인스턴스", "모듈", "함수의 반환값"],
+            #     2, "클래스",
+            #     "self는 메서드를 호출한 현재 인스턴스를 가리킵니다."
+            # ),
+            # Quiz(
+            #     "객체(Object)에 대한 설명으로 올바른 것은?",
+            #     ["클래스로부터 생성된 실제 대상",
+            #      "반드시 숫자만 저장하는 변수",
+            #      "반복문을 의미하는 문법",
+            #      "파일 확장자"],
+            #     1, "객체지향",
+            #     "객체는 클래스라는 설계도를 바탕으로 생성됩니다."
+            # ),
+            # Quiz(
+            #     "json.dump()의 역할은?",
+            #     ["JSON 파일 읽기", "JSON 데이터 쓰기",
+            #      "파일 삭제", "화면 출력"],
+            #     2, "파일 입출력",
+            #     "json.dump()는 Python 데이터를 JSON 형식으로 파일에 씁니다."
+            # ),
+            # Quiz(
+            #     "git add 명령어의 역할은?",
+            #     ["원격 저장소 삭제", "커밋 기록 삭제",
+            #      "변경 파일을 스테이징 영역에 추가",
+            #      "브랜치 병합"],
+            #     3, "Git",
+            #     "git add는 커밋할 변경사항을 스테이징 영역에 올립니다."
+            # ),
+            # Quiz(
+            #     "git clone과 git pull의 차이로 올바른 것은?",
+            #     ["둘 다 파일을 삭제한다",
+            #      "clone은 저장소를 복제하고 pull은 기존 저장소에 변경사항을 가져온다",
+            #      "pull은 새 저장소를 만든다",
+            #      "clone은 커밋만 실행한다"],
+            #     2, "Git",
+            #     "clone은 원격 저장소를 처음 복제하고, pull은 기존 저장소를 업데이트합니다."
+            # )
         ]
+# """
+# self.data_file 파일 경로
+# .open() 해당 파일 열기
+# "r" 읽기 모드(Read)
+# encoding="utf-8" UTF-8 인코딩으로 읽기
+# as file 열린 파일을 file이라는 이름으로 사용
+# """
+# with를 사용하면 해당 블록이 끝났을 때 파일을 자동으로 닫아줘서 직접 close()를 호출하지 않아도 된다.
 
     def load_data(self):
         """JSON 파일에서 퀴즈와 최고 점수를 불러온다."""
@@ -139,12 +156,20 @@ class QuizGame:
 
     def save_data(self):
         """현재 퀴즈와 최고 점수를 JSON 파일에 저장한다."""
-
+        """quiz.to_dict() for quiz in self.quizzes를 풀어쓰면,"""
+        # quiz_list = []
+        # for quiz in self.quizzes:
+        # quiz_list.append(quiz.to_dict())
         data = {
             "quizzes": [quiz.to_dict() for quiz in self.quizzes],
             "best_score": self.best_score
         }
-
+        # json JSON 기능을 제공하는 모듈
+        # dump() 데이터를 JSON 형식으로 파일에 저장하는 함수
+        # data 저장할 파이썬 데이터
+        # file 데이터를 저장할 파일
+        # ensure_ascii=False 한글을 유니코드 코드로 바꾸지 않고 그대로 저장(한글 유지)
+        # indent=4 들여쓰기를 4칸으로 설정
         try:
             with self.data_file.open("w", encoding="utf-8") as file:
                 json.dump(data, file, ensure_ascii=False, indent=4)
@@ -153,9 +178,16 @@ class QuizGame:
             print(f"데이터 저장에 실패했습니다: {error}")
 
     def get_input(self, message):
-        """사용자 입력의 앞뒤 공백을 제거한다."""
+        """사용자 입력의 앞뒤 공백을 제거한다.(중간 공백은 제거 안됨)"""
         return input(message).strip()
 
+    # continue는 현재 반복을 중단하고 while문의 처음으로 돌아감
+    """
+    try 일단 실행을 시도할 코드
+    except 지정한 오류가 발생했을 때 실행할 코드
+    else 오류 없이 try가 끝났을 때 실행할 코드
+    finally 오류 발생 여부와 관계없이 마지막에 실행할 코드
+    """
     def get_number(self, message, minimum, maximum):
         """범위 안의 숫자가 입력될 때까지 다시 입력받는다."""
 
@@ -197,7 +229,9 @@ class QuizGame:
 
         score = 0
 
-        print(f"\n총 {len(self.quizzes)}문제를 시작합니다!")
+        # 총 문제 개수 출력
+        # f"..." 괄호 안의 내용을 화면에 출력 (f는 f-string이라는 기능)
+        print(f"\n총 {len(self.quizzes)}문제를 시작합니다!") 
 
         for index, quiz in enumerate(self.quizzes, start=1):
             print(f"\n[{index}/{len(self.quizzes)}]")
