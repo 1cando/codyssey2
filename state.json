@@ -1,0 +1,149 @@
+{
+    "quizzes": [
+        {
+            "question": "Python에서 변수의 역할은?",
+            "choices": [
+                "데이터를 저장하고 참조한다",
+                "반복문을 실행한다",
+                "파일을 삭제한다",
+                "프로그램을 종료한다"
+            ],
+            "answer": 1,
+            "category": "Python 기초",
+            "explanation": "변수는 값을 저장하고 이름으로 참조할 수 있게 해줍니다."
+        },
+        {
+            "question": "다음 코드의 출력 결과는?\na = 10\nprint(type(a))",
+            "choices": [
+                "<class 'str'>",
+                "<class 'int'>",
+                "<class 'float'>",
+                "<class 'list'>"
+            ],
+            "answer": 2,
+            "category": "Python 기초",
+            "explanation": "10은 정수이므로 자료형은 int입니다."
+        },
+        {
+            "question": "Python에서 여러 데이터를 순서대로 저장하고 수정할 수 있는 자료형은?",
+            "choices": [
+                "tuple",
+                "str",
+                "list",
+                "bool"
+            ],
+            "answer": 3,
+            "category": "자료형",
+            "explanation": "list는 순서가 있고 값을 수정할 수 있는 자료형입니다."
+        },
+        {
+            "question": "다음 코드의 출력 결과는?\nfor i in range(1, 4):\n    print(i)",
+            "choices": [
+                "0, 1, 2",
+                "1, 2, 3",
+                "1, 2, 3, 4",
+                "2, 3, 4"
+            ],
+            "answer": 2,
+            "category": "반복문",
+            "explanation": "range(1, 4)는 1부터 3까지의 숫자를 생성합니다."
+        },
+        {
+            "question": "while문에 대한 설명으로 올바른 것은?",
+            "choices": [
+                "조건이 참인 동안 반복한다",
+                "반드시 1번만 실행된다",
+                "클래스를 생성한다",
+                "파일을 저장한다"
+            ],
+            "answer": 1,
+            "category": "반복문",
+            "explanation": "while문은 조건식이 참인 동안 코드를 반복 실행합니다."
+        },
+        {
+            "question": "다음 코드의 출력 결과는?\ndef add(a, b):\n    return a + b\nprint(add(3, 5))",
+            "choices": [
+                "35",
+                "15",
+                "8",
+                "3"
+            ],
+            "answer": 3,
+            "category": "함수",
+            "explanation": "add 함수는 두 숫자의 합인 8을 반환합니다."
+        },
+        {
+            "question": "Python 클래스에서 __init__ 메서드의 역할은?",
+            "choices": [
+                "반복문 실행",
+                "객체 초기화",
+                "파일 삭제",
+                "정렬"
+            ],
+            "answer": 2,
+            "category": "클래스",
+            "explanation": "__init__은 객체가 생성될 때 초기화 작업을 수행합니다."
+        },
+        {
+            "question": "클래스 메서드 안에서 self가 가리키는 것은?",
+            "choices": [
+                "부모 클래스",
+                "현재 인스턴스",
+                "모듈",
+                "함수의 반환값"
+            ],
+            "answer": 2,
+            "category": "클래스",
+            "explanation": "self는 메서드를 호출한 현재 인스턴스를 가리킵니다."
+        },
+        {
+            "question": "객체(Object)에 대한 설명으로 올바른 것은?",
+            "choices": [
+                "클래스로부터 생성된 실제 대상",
+                "반드시 숫자만 저장하는 변수",
+                "반복문을 의미하는 문법",
+                "파일 확장자"
+            ],
+            "answer": 1,
+            "category": "객체지향",
+            "explanation": "객체는 클래스라는 설계도를 바탕으로 생성됩니다."
+        },
+        {
+            "question": "json.dump()의 역할은?",
+            "choices": [
+                "JSON 파일 읽기",
+                "JSON 데이터 쓰기",
+                "파일 삭제",
+                "화면 출력"
+            ],
+            "answer": 2,
+            "category": "파일 입출력",
+            "explanation": "json.dump()는 Python 데이터를 JSON 형식으로 파일에 씁니다."
+        },
+        {
+            "question": "git add 명령어의 역할은?",
+            "choices": [
+                "원격 저장소 삭제",
+                "커밋 기록 삭제",
+                "변경 파일을 스테이징 영역에 추가",
+                "브랜치 병합"
+            ],
+            "answer": 3,
+            "category": "Git",
+            "explanation": "git add는 커밋할 변경사항을 스테이징 영역에 올립니다."
+        },
+        {
+            "question": "git clone과 git pull의 차이로 올바른 것은?",
+            "choices": [
+                "둘 다 파일을 삭제한다",
+                "clone은 저장소를 복제하고 pull은 기존 저장소에 변경사항을 가져온다",
+                "pull은 새 저장소를 만든다",
+                "clone은 커밋만 실행한다"
+            ],
+            "answer": 2,
+            "category": "Git",
+            "explanation": "clone은 원격 저장소를 처음 복제하고, pull은 기존 저장소를 업데이트합니다."
+        }
+    ],
+    "best_score": 11
+}
