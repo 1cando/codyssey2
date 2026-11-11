@@ -15,9 +15,9 @@ class QuizGame:
     # __init__ 변수 초기화
     # """
     # Path() 파일이나 폴더 경로를 다루는 객체를 만듦
-    # __file__ 현재 실행 중인 Python 파일의 경로
+    # __file__ 현재 실행 중인 Python 파일의 경로 /Users/study/codyssey/codyssey2/main.py
     # .resolve() 경로를 절대 경로로 변환
-    # .parent 현재 파일이 들어 있는 폴더
+    # .parent 현재 파일이 들어 있는 상위 폴더 /Users/study/codyssey/codyssey2
     # / "state.json" 해당 폴더 안의 state.json 경로를 만듦
     # self.data_file = /Users/사용자/codyssey2/state.json
     # """
@@ -118,15 +118,6 @@ class QuizGame:
             )
         ]
 
-# self.data_file 파일 경로
-# .open() 해당 파일 열기
-# "r" 읽기 모드(Read)
-# encoding="utf-8" UTF-8 인코딩으로 읽기
-# 열린 파일을 file이라는 변수로 사용
-# data = json.load(file) => 열린 파일(file)의 JSON 내용을 읽어서 파이썬 자료형(딕셔너리)으로 변환
-# with를 사용하면 해당 블록이 끝났을 때 파일을 자동으로 닫아줘서 직접 close()를 호출하지 않아도 된다. (파일을 안전하게 열고 사용하기 위한 문법)
-
-
     def load_data(self):
         """JSON 파일에서 퀴즈와 최고 점수를 불러온다."""
 
@@ -150,7 +141,7 @@ class QuizGame:
             self.best_score = 0
             self.save_data()
             return
-
+        # 원본 파일이 있는 경우
         try:
             self.quizzes, self.best_score = self.read_data(self.data_file)
 
@@ -185,7 +176,13 @@ class QuizGame:
             self.best_score = 0
             self.save_data()
 
-
+    # self.data_file 파일 경로
+    # .open() 해당 파일 열기
+    # "r" 읽기 모드(Read)
+    # encoding="utf-8" UTF-8 인코딩으로 읽기
+    # 열린 파일을 file이라는 변수로 사용
+    # data = json.load(file) => 열린 파일(file)의 JSON 내용을 읽어서 파이썬 자료형(딕셔너리)으로 변환
+    # with를 사용하면 해당 블록이 끝났을 때 파일을 자동으로 닫아줘서 직접 close()를 호출하지 않아도 된다. (파일을 안전하게 열고 사용하기 위한 문법)
     def read_data(self, file_path):
         """JSON 파일을 읽고 퀴즈와 최고 점수를 반환한다."""
 
