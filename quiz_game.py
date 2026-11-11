@@ -216,7 +216,7 @@ class QuizGame:
         if not isinstance(loaded_best_score, int) or loaded_best_score < 0:
             raise ValueError("최고 점수 데이터가 올바르지 않습니다.")
 
-    return loaded_quizzes, loaded_best_score
+        return loaded_quizzes, loaded_best_score
 
     def save_data(self):
         """현재 퀴즈와 최고 점수를 JSON 파일에 저장한다."""
