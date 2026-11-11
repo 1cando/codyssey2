@@ -2,6 +2,7 @@
 # quiz_game.py
 
 import json
+import random
 from pathlib import Path
 
 from quiz import Quiz
@@ -158,6 +159,12 @@ class QuizGame:
             self.quizzes = loaded_quizzes
             self.best_score = loaded_best_score
 
+        # OSError 파일 관련 입출력 오류, 파일이 없거나 읽기 권한이 없는 경우
+        # json.JSONDecodeError JSON 형식 오류, JSON 문법이 잘못된 경우
+        # KeyError 딕셔너리에 없는 키를 조회할 때 발생
+        # TypeError 자료형이 올바르지 않거나 연산이 불가능할 때 발생, 리스트가 와야 하는 곳에 문자열이 들어오는 경우
+        # ValueError 값이 적절하지 않을 때 발생, int("hello")처럼 변환할 수 없는 값을 정수로 바꾸려는 경우
+        # as error는 발생한 오류 객체를 error라는 변수에 저장
         except (OSError, json.JSONDecodeError, KeyError,
                 TypeError, ValueError) as error:
             print(f"저장 데이터를 불러오지 못했습니다: {error}")
@@ -241,13 +248,30 @@ class QuizGame:
 
         score = 0
 
+        # 기존 문제를 복사해서 랜덤으로 섞고 보여주기
+        # quiz_list = self.quizzes.copy()
+        # random.shuffle(quiz_list)
+
+        # 문제수 선택 및 랜덤 모듈 사용
+        total_count = len(self.quizzes)
+
+        print(f"\n현재 등록된 퀴즈: {total_count}문제")
+
+        count = self.get_number(
+            f"몇 문제를 풀까요? (1~{total_count}): ",
+            1,
+            total_count
+        )
+
+        quiz_list = random.sample(self.quizzes, count)       
+
         # 총 문제 개수 출력
         # f"..." 괄호 안의 내용을 화면에 출력 (f는 f-string이라는 기능)
         # \n은 줄바꿈
-        print(f"\n총 {len(self.quizzes)}문제를 시작합니다!") 
-
-        for index, quiz in enumerate(self.quizzes, start=1):
-            print(f"\n[{index}/{len(self.quizzes)}]")
+        print(f"\n총 {len(quiz_list)}문제를 시작합니다!") 
+        
+        for index, quiz in enumerate(quiz_list, start=1):
+            print(f"\n[{index}/{len(quiz_list)}]")
             quiz.show_question()
 
             answer = self.get_number("정답 번호: ", 1, len(quiz.choices))
@@ -262,7 +286,7 @@ class QuizGame:
                 print(f"해설: {quiz.explanation}")
 
         print("\n========== 결과 ==========")
-        print(f"점수: {score} / {len(self.quizzes)}")
+        print(f"점수: {score} / {len(quiz_list)}")
 
         if score > self.best_score:
             self.best_score = score

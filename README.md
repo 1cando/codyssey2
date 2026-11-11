@@ -30,6 +30,10 @@
 % python3.15 --version
 Python 3.15.2
 ```
+![develop_env](screenshots/develop_env.png)
+
+**GitHub 저장소 URL**
+https://github.com/1cando/codyssey2.git
 
 ## 4.Git
 
@@ -149,6 +153,7 @@ no changes added to commit (use "git add" and/or "git commit -a")
 
 ### 6) git commit 현황
 ![git commit](screenshots/git_commit.png)
+![git commit](screenshots/git_log_oneline_graph.png)
 
 ## 5. 실행방법
 
@@ -198,12 +203,11 @@ code-quiz/
 ├── state.json
 ├── README.md
 ├── .gitignore
-└── docs/
-    └── screenshots/
-        ├── menu.png
-        ├── play.png
-        ├── add_quiz.png
-        └── score.png
+└── screenshots/
+    ├── menu.png
+    ├── play.png
+    ├── add_quiz.png
+    └── score.png
 ```
 
 | 파일 | 설명 |
@@ -214,7 +218,7 @@ code-quiz/
 | `state.json` | 퀴즈 데이터와 최고 점수 저장 |
 | `README.md` | 프로젝트 설명 |
 | `.gitignore` | Git 추적 제외 파일 설정 |
-| `docs/screenshots/` | 프로그램 실행 화면 캡처 저장 |
+| `screenshots/` | 프로그램 실행 화면 캡처 저장 |
 
 
 ## 8. 데이터 파일 설명 (Data File)
@@ -568,7 +572,7 @@ git push origin main
 Git을 활용하면 프로젝트의 변경 이력을 체계적으로 관리하고, 작업 내용을 안전하게 공유할 수 있습니다.
 
 
-## 9. 클래스 및 프로그램 구조
+## 11. 클래스 및 프로그램 구조
 
 본 프로젝트는 객체지향 프로그래밍(OOP) 개념을 적용하여
 Quiz 클래스와 QuizGame 클래스를 중심으로 구성했습니다.
@@ -716,9 +720,7 @@ main.py가 프로그램의 전체 실행 흐름에 집중하도록 구성했습�
 9. 종료 시 데이터 저장 후 프로그램 종료
 
 
-
-
-## 11. 실행 화면
+## 12. 실행 화면
 
 ### 메인 메뉴
 ![메인 메뉴](screenshots/menu.png)
@@ -731,7 +733,3 @@ main.py가 프로그램의 전체 실행 흐름에 집중하도록 구성했습�
 
 ### 최고 점수 확인
 ![최고 점수](screenshots/score.png)
-
----
-
-**Code Quiz — Learn, Practice, and Challenge Yourself!**
