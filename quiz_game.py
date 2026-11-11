@@ -3,6 +3,8 @@
 
 import json
 import random
+# shutil은 파일을 복사하거나 이동할 때 사용하는 Python 모듈
+import shutil
 from pathlib import Path
 
 from quiz import Quiz
@@ -23,7 +25,7 @@ class QuizGame:
         self.quizzes = []
         self.best_score = 0
         self.data_file = Path(__file__).resolve().parent / "state.json"
-
+        self.backup_file = Path(__file__).resolve().parent / "state.json.bak"
         self.load_data()
 
     def create_default_quizzes(self):
@@ -124,53 +126,97 @@ class QuizGame:
 # data = json.load(file) => 열린 파일(file)의 JSON 내용을 읽어서 파이썬 자료형(딕셔너리)으로 변환
 # with를 사용하면 해당 블록이 끝났을 때 파일을 자동으로 닫아줘서 직접 close()를 호출하지 않아도 된다. (파일을 안전하게 열고 사용하기 위한 문법)
 
+
     def load_data(self):
         """JSON 파일에서 퀴즈와 최고 점수를 불러온다."""
 
+        # 저장 파일이 없으면 백업 파일을 먼저 확인한다.
         if not self.data_file.exists():
+            if self.backup_file.exists():
+                try:
+                    self.quizzes, self.best_score = self.read_data(
+                        self.backup_file
+                    )
+                    shutil.copy2(self.backup_file, self.data_file)
+                    print("백업 파일을 이용하여 데이터를 복구했습니다.")
+                    return
+
+                except (OSError, json.JSONDecodeError,
+                        KeyError, TypeError, ValueError) as error:
+                    print(f"백업 파일을 불러오지 못했습니다: {error}")
+
+            print("저장 데이터가 없습니다. 기본 퀴즈로 시작합니다.")
             self.quizzes = self.create_default_quizzes()
+            self.best_score = 0
             self.save_data()
             return
 
         try:
-            with self.data_file.open("r", encoding="utf-8") as file:
-                data = json.load(file)
-            # 리스트 컴프리헨션(List Comprehension)이라는 문법이야. 반복문을 사용해서 리스트를 간결하게 만드는 방법
-            # loaded_quizzes = []
+            self.quizzes, self.best_score = self.read_data(self.data_file)
 
-            # for item in data["quizzes"]:
-            #     quiz = Quiz.from_dict(item)
-            #     loaded_quizzes.append(quiz)           
-            
-            
-            loaded_quizzes = [
-                Quiz.from_dict(item) for item in data["quizzes"]
-            ]
-            # 딕셔너리.get("찾을 키", 기본값)
-            loaded_best_score = data.get("best_score", 0)
-            # isinstance()는 특정 변수의 자료형이 무엇인지 확인
-            # not isinstance가 참이거나 뒤가 참이거나
-            # raise 오류를 발생
-            # ValueError 값이 올바르지 않을 때 사용하는 오류 종류
-            # 괄호 안의 문장 : 오류가 발생한 이유를 설명하는 메시지
-            if not isinstance(loaded_best_score, int) or loaded_best_score < 0:
-                raise ValueError("최고 점수 데이터가 올바르지 않습니다.")
+        except (OSError, json.JSONDecodeError,
+                KeyError, TypeError, ValueError) as error:
 
-            self.quizzes = loaded_quizzes
-            self.best_score = loaded_best_score
-
-        # OSError 파일 관련 입출력 오류, 파일이 없거나 읽기 권한이 없는 경우
-        # json.JSONDecodeError JSON 형식 오류, JSON 문법이 잘못된 경우
-        # KeyError 딕셔너리에 없는 키를 조회할 때 발생
-        # TypeError 자료형이 올바르지 않거나 연산이 불가능할 때 발생, 리스트가 와야 하는 곳에 문자열이 들어오는 경우
-        # ValueError 값이 적절하지 않을 때 발생, int("hello")처럼 변환할 수 없는 값을 정수로 바꾸려는 경우
-        # as error는 발생한 오류 객체를 error라는 변수에 저장
-        except (OSError, json.JSONDecodeError, KeyError,
-                TypeError, ValueError) as error:
             print(f"저장 데이터를 불러오지 못했습니다: {error}")
+
+            # 백업 파일을 이용한 복구 시도
+            if self.backup_file.exists():
+                try:
+                    self.quizzes, self.best_score = self.read_data(
+                        self.backup_file
+                    )
+                    shutil.copy2(self.backup_file, self.data_file)
+                    print("백업 파일을 이용하여 데이터를 복구했습니다.")
+                    return
+
+            # OSError 파일 관련 입출력 오류, 파일이 없거나 읽기 권한이 없는 경우
+            # json.JSONDecodeError JSON 형식 오류, JSON 문법이 잘못된 경우
+            # KeyError 딕셔너리에 없는 키를 조회할 때 발생
+            # TypeError 자료형이 올바르지 않거나 연산이 불가능할 때 발생, 리스트가 와야 하는 곳에 문자열이 들어오는 경우
+            # ValueError 값이 적절하지 않을 때 발생, int("hello")처럼 변환할 수 없는 값을 정수로 바꾸려는 경우
+            # as error는 발생한 오류 객체를 error라는 변수에 저장
+                except (OSError, json.JSONDecodeError,
+                        KeyError, TypeError, ValueError) as backup_error:
+                    print(f"백업 파일도 복구할 수 없습니다: {backup_error}")
+
+            # 백업 파일도 사용할 수 없는 경우 기본 데이터로 초기화
             print("기본 퀴즈로 시작합니다.")
             self.quizzes = self.create_default_quizzes()
             self.best_score = 0
+            self.save_data()
+
+
+    def read_data(self, file_path):
+        """JSON 파일을 읽고 퀴즈와 최고 점수를 반환한다."""
+
+        with file_path.open("r", encoding="utf-8") as file:
+            data = json.load(file)
+
+        if not isinstance(data, dict):
+            raise ValueError("저장 데이터 형식이 올바르지 않습니다.")
+
+        if not isinstance(data.get("quizzes"), list):
+            raise ValueError("퀴즈 데이터 형식이 올바르지 않습니다.")
+        # 리스트 컴프리헨션(List Comprehension)이라는 문법이야. 반복문을 사용해서 리스트를 간결하게 만드는 방법
+        # loaded_quizzes = []
+
+        # for item in data["quizzes"]:
+        # quiz = Quiz.from_dict(item)
+        # loaded_quizzes.append(quiz)
+        loaded_quizzes = [
+            Quiz.from_dict(item) for item in data["quizzes"]
+        ]
+        # 딕셔너리.get("찾을 키", 기본값)
+        loaded_best_score = data.get("best_score", 0)
+        # isinstance()는 특정 변수의 자료형이 무엇인지 확인
+        # not isinstance가 참이거나 뒤가 참이거나
+        # raise 오류를 발생
+        # ValueError 값이 올바르지 않을 때 사용하는 오류 종류
+        # 괄호 안의 문장 : 오류가 발생한 이유를 설명하는 메시지
+        if not isinstance(loaded_best_score, int) or loaded_best_score < 0:
+            raise ValueError("최고 점수 데이터가 올바르지 않습니다.")
+
+    return loaded_quizzes, loaded_best_score
 
     def save_data(self):
         """현재 퀴즈와 최고 점수를 JSON 파일에 저장한다."""
@@ -182,18 +228,42 @@ class QuizGame:
             "quizzes": [quiz.to_dict() for quiz in self.quizzes],
             "best_score": self.best_score
         }
+
+        # 임시 파일 경로
+        temp_file = self.data_file.with_name(
+        self.data_file.name + ".tmp"
+        )
         # json JSON 기능을 제공하는 모듈
         # dump() 데이터를 JSON 형식으로 파일에 저장하는 함수
         # data 저장할 파이썬 데이터
         # file 데이터를 저장할 파일
         # ensure_ascii=False 한글을 유니코드 코드로 바꾸지 않고 그대로 저장(한글 유지)
         # indent=4 들여쓰기를 4칸으로 설정
+
         try:
-            with self.data_file.open("w", encoding="utf-8") as file:
+            # 기존 저장 파일이 정상적인 경우 백업 파일 생성
+            if self.data_file.exists():
+                try:
+                    self.read_data(self.data_file)
+                    shutil.copy2(self.data_file, self.backup_file)
+
+                except (OSError, json.JSONDecodeError,
+                        KeyError, TypeError, ValueError):
+                    print("기존 저장 파일이 손상되어 백업하지 않았습니다.")
+
+            # 임시 파일에 새로운 데이터 저장
+            with temp_file.open("w", encoding="utf-8") as file:
                 json.dump(data, file, ensure_ascii=False, indent=4)
+
+            # 저장이 완료되면 기존 파일을 새로운 파일로 교체
+            temp_file.replace(self.data_file)
 
         except OSError as error:
             print(f"데이터 저장에 실패했습니다: {error}")
+
+            # 저장 실패 시 남아 있는 임시 파일 정리
+            if temp_file.exists():
+                temp_file.unlink()
 
     # input() => 입력값 받음, input(mes) => mes는 입력받기 전 출력 문구
     def get_input(self, message):
