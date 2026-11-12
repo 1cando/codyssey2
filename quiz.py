@@ -38,10 +38,11 @@ class Quiz:
             "explanation": self.explanation
         }
 
-    # 딕셔너리 데이터를 다시 Quiz 객체로 변환하는 메서드
-    # @classmethod는 클래스 자체를 기준으로 실행하는 메서드
+    # 딕셔너리 데이터를 다시 Quiz 객체로 변환하는 메서드 
+    # @classmethod는 클래스 자체를 첫 번째 인자로 전달받는 메서드 (객체를 만들기 전에 클래스 이름으로 호출) 
     # data.get("category", "기타") 카테고리 가져오기, 없으면 기타
     # data.get("explanation", "") 해설 가져오기, 없으면 빈 문자열
+    # return cls() 생성한 Quiz 객체 반환
     @classmethod
     def from_dict(cls, data):
         """딕셔너리 데이터를 Quiz 객체로 변환한다."""
