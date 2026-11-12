@@ -153,6 +153,9 @@ no changes added to commit (use "git add" and/or "git commit -a")
 
 ### 6) git commit 현황
 ![git commit](screenshots/git_commit.png)
+```bash
+% git log --oneline --graph
+```
 ![git commit](screenshots/git_log_oneline_graph.png)
 
 ## 5. 실행방법
