@@ -224,6 +224,7 @@ code-quiz/
 | `quiz.py` | 퀴즈 한 문제를 표현하는 Quiz 클래스 |
 | `quiz_game.py` | 퀴즈 진행, 문제 추가, 점수 관리 등을 담당하는 QuizGame 클래스 |
 | `state.json` | 퀴즈 데이터와 최고 점수 저장 |
+| `state.json.bak` | state.json의 백업 파일 |
 | `README.md` | 프로젝트 설명 |
 | `.gitignore` | Git 추적 제외 파일 설정 |
 | `screenshots/` | 프로그램 실행 화면 캡처 저장 |
