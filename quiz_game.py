@@ -144,7 +144,12 @@ class QuizGame:
         # 원본 파일이 있는 경우
         try:
             self.quizzes, self.best_score = self.read_data(self.data_file)
-
+        # OSError 파일 관련 입출력 오류, 파일이 없거나 읽기 권한이 없는 경우
+        # json.JSONDecodeError JSON 형식 오류, JSON 문법이 잘못된 경우
+        # KeyError 딕셔너리에 없는 키를 조회할 때 발생
+        # TypeError 자료형이 올바르지 않거나 연산이 불가능할 때 발생, 리스트가 와야 하는 곳에 문자열이 들어오는 경우
+        # ValueError 값이 적절하지 않을 때 발생, int("hello")처럼 변환할 수 없는 값을 정수로 바꾸려는 경우
+        # as error는 발생한 오류 객체를 error라는 변수에 저장
         except (OSError, json.JSONDecodeError,
                 KeyError, TypeError, ValueError) as error:
 
@@ -160,12 +165,6 @@ class QuizGame:
                     print("백업 파일을 이용하여 데이터를 복구했습니다.")
                     return
 
-            # OSError 파일 관련 입출력 오류, 파일이 없거나 읽기 권한이 없는 경우
-            # json.JSONDecodeError JSON 형식 오류, JSON 문법이 잘못된 경우
-            # KeyError 딕셔너리에 없는 키를 조회할 때 발생
-            # TypeError 자료형이 올바르지 않거나 연산이 불가능할 때 발생, 리스트가 와야 하는 곳에 문자열이 들어오는 경우
-            # ValueError 값이 적절하지 않을 때 발생, int("hello")처럼 변환할 수 없는 값을 정수로 바꾸려는 경우
-            # as error는 발생한 오류 객체를 error라는 변수에 저장
                 except (OSError, json.JSONDecodeError,
                         KeyError, TypeError, ValueError) as backup_error:
                     print(f"백업 파일도 복구할 수 없습니다: {backup_error}")
